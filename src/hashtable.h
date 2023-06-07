@@ -10,6 +10,12 @@
         l = NULL;              \
     }
 
+#define hashtable_free(h)           \
+    {                               \
+        hashtable_free_not_null(h); \
+        h = NULL;                   \
+    }
+
 struct listnode {
     char* data;
     int value;
@@ -24,7 +30,7 @@ bool hashtable_add(hashtable head, char* key, int value);
 hashtable_node hashtable_lookup(hashtable head, char* key);
 void hashtable_delete(hashtable head, char* key);
 void hashtable_print(hashtable head);
-void hashtable_free(hashtable head);
+void hashtable_free_not_null(hashtable head);
 
 struct listnode* list_createnode(char* data, int value);
 struct listnode* list_addfront(struct listnode* list, char* data, int value);

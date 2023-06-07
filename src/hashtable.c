@@ -135,7 +135,7 @@ void hashtable_print(hashtable head)
     }
 }
 
-void hashtable_free(hashtable head)
+void hashtable_free_not_null(hashtable head)
 {
     if (head) {
         for (int i = 0; i < HASHTABLE_HEIGHT; ++i) {
