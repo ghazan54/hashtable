@@ -55,7 +55,7 @@ struct listnode* list_delete(struct listnode* list, char* data)
     return list;
 }
 
-void list_free(struct listnode* list)
+void list_free_not_null(struct listnode* list)
 {
     for (; list;) {
         struct listnode* next = list->next;

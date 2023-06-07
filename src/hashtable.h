@@ -4,6 +4,12 @@
 
 #define HASHTABLE_HEIGHT (200003)
 
+#define list_free(l)           \
+    {                          \
+        list_free_not_null(l); \
+        l = NULL;              \
+    }
+
 struct listnode {
     char* data;
     int value;
@@ -24,5 +30,5 @@ struct listnode* list_createnode(char* data, int value);
 struct listnode* list_addfront(struct listnode* list, char* data, int value);
 struct listnode* list_lookup(struct listnode* list, char* data);
 struct listnode* list_delete(struct listnode* list, char* data);
-void list_free(struct listnode* list);
+void list_free_not_null(struct listnode* list);
 void list_print(struct listnode* list);
