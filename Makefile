@@ -34,9 +34,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
 	$(CC) $(CFLAGS) -MM -MT $@ -MF $(OBJ_DIR)/$*.d $<
 
-# $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
-# 	$(CC) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
-# 	$(CC) $(CFLAGS) -MM -MT $@ -MF $(OBJ_DIR)/$*.d $<
-
 clean:
 	rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d $(TARGET) $(LIB)
