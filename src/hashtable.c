@@ -87,15 +87,61 @@ unsigned int ELFHash(char* key)
     return h % HASHTABLE_HEIGHT;
 }
 
-hashtable* hashtable_initialize(void)
+hashtable hashtable_initialize(void)
 {
-    return (hashtable*)malloc(sizeof(hashtable) * HASHTABLE_HEIGHT);
+    hashtable head = (hashtable)malloc(sizeof(*head) * HASHTABLE_HEIGHT);
+    if (head) {
+        for (int i = 0; i < HASHTABLE_HEIGHT; ++i)
+            head[i] = NULL;
+    }
+    return head;
 }
 
-// void hashtable_add(hashtable* head, char* key, int value) { }
+bool hashtable_add(hashtable head, char* key, int value)
+{
+    if (head && key) {
+        unsigned int h = ELFHash(key);
+        head[h] = list_addfront(head[h], key, value);
+        return true;
+    }
+    return false;
+}
 
-// void hashtable_lookup(hashtable* head, char* key) { }
+hashtable_node hashtable_lookup(hashtable head, char* key)
+{
+    if (head && key) {
+        unsigned int h = ELFHash(key);
+        hashtable_node ret = list_lookup(head[h], key);
+        return ret;
+    }
+    return NULL;
+}
 
-// void hashtable_delete(hashtable* head, char* key) { }
+void hashtable_delete(hashtable head, char* key)
+{
+    if (head && key) {
+        unsigned int h = ELFHash(key);
+        head[h] = list_delete(head[h], key);
+    }
+}
 
-// void hashtable_free(hashtable* head) { }
+void hashtable_print(hashtable head)
+{
+    if (head) {
+        for (int i = 0; i < HASHTABLE_HEIGHT; ++i) {
+            if (head[i])
+                list_print(head[i]);
+        }
+    }
+}
+
+void hashtable_free(hashtable head)
+{
+    if (head) {
+        for (int i = 0; i < HASHTABLE_HEIGHT; ++i) {
+            if (head[i])
+                list_free(head[i]);
+        }
+        free(head);
+    }
+}

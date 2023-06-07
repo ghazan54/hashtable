@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 #define HASHTABLE_HEIGHT (200003)
 
 struct listnode {
@@ -8,13 +10,15 @@ struct listnode {
     struct listnode* next;
 };
 
-typedef struct listnode hashtable;
+typedef struct listnode** hashtable;
+typedef struct listnode* hashtable_node;
 
-hashtable* hashtable_initialize(void);
-void hashtable_add(hashtable* head, char* key, int value);
-void hashtable_lookup(hashtable* head, char* key);
-void hashtable_delete(hashtable* head, char* key);
-void hashtable_free(hashtable* head);
+hashtable hashtable_initialize(void);
+bool hashtable_add(hashtable head, char* key, int value);
+hashtable_node hashtable_lookup(hashtable head, char* key);
+void hashtable_delete(hashtable head, char* key);
+void hashtable_print(hashtable head);
+void hashtable_free(hashtable head);
 
 struct listnode* list_createnode(char* data, int value);
 struct listnode* list_addfront(struct listnode* list, char* data, int value);
