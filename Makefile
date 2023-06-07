@@ -1,7 +1,7 @@
 CC := gcc
 CFLAGS := -Wall -Wextra -g
 CPPFLAGS := -I src/ -I thirdparty/
-TARGET := build/hashtable.out
+TARGET := build/hashtable_test.out
 LIB := build/hashtable.a
 
 SRC_DIR := src
