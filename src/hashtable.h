@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define HASHTABLE_HEIGHT (200003)
 

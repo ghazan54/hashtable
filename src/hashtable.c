@@ -1,6 +1,5 @@
 #include <hashtable.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 struct listnode* list_createnode(char* data, int value)
