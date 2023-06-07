@@ -92,6 +92,69 @@ CTEST(listnode, free)
     ASSERT_NULL(list);
 }
 
+CTEST(hashtable, initialize)
+{
+    hashtable head = hashtable_initialize();
+    ASSERT_NOT_NULL(head);
+    for (int i = 0; i < HASHTABLE_HEIGHT; ++i) {
+        ASSERT_NULL(head[i]);
+    }
+    hashtable_free(head);
+}
+
+CTEST(hashtable, add_and_lookup)
+{
+    hashtable head = hashtable_initialize();
+    ASSERT_TRUE(hashtable_add(head, "key1", 10));
+    ASSERT_TRUE(hashtable_add(head, "key2", 20));
+
+    hashtable_node node1 = hashtable_lookup(head, "key1");
+    ASSERT_NOT_NULL(node1);
+    ASSERT_STR("key1", node1->data);
+    ASSERT_EQUAL(10, node1->value);
+
+    hashtable_node node2 = hashtable_lookup(head, "key2");
+    ASSERT_NOT_NULL(node2);
+    ASSERT_STR("key2", node2->data);
+    ASSERT_EQUAL(20, node2->value);
+
+    ASSERT_NULL(hashtable_lookup(head, "key3"));
+
+    hashtable_free(head);
+}
+
+CTEST(hashtable, delete)
+{
+    hashtable head = hashtable_initialize();
+    hashtable_add(head, "key1", 10);
+    hashtable_add(head, "key2", 20);
+
+    ASSERT_NOT_NULL(hashtable_lookup(head, "key1"));
+    ASSERT_NOT_NULL(hashtable_lookup(head, "key2"));
+
+    hashtable_delete(head, "key1");
+
+    ASSERT_NULL(hashtable_lookup(head, "key1"));
+    ASSERT_NOT_NULL(hashtable_lookup(head, "key2"));
+
+    hashtable_delete(head, "key2");
+
+    ASSERT_NULL(hashtable_lookup(head, "key2"));
+
+    hashtable_free(head);
+}
+
+CTEST(hashtable, free)
+{
+    hashtable head = hashtable_initialize();
+    hashtable_add(head, "key1", 10);
+    hashtable_add(head, "key2", 20);
+
+    hashtable_free(head);
+
+    ASSERT_NULL(head);
+}
+
 int main(int argc, const char** argv)
 {
     return ctest_main(argc, argv);
