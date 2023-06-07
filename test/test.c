@@ -118,7 +118,7 @@ CTEST(hashtable, add)
     ASSERT_STR("key2", node2->data);
     ASSERT_EQUAL(20, node2->value);
 
-    free(head);
+    hashtable_free(head);
 }
 
 CTEST(hashtable, lookup)
@@ -139,7 +139,7 @@ CTEST(hashtable, lookup)
 
     ASSERT_NULL(hashtable_lookup(head, "key3"));
 
-    free(head);
+    hashtable_free(head);
 }
 
 CTEST(hashtable, delete)
