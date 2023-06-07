@@ -102,7 +102,7 @@ CTEST(hashtable, initialize)
     hashtable_free(head);
 }
 
-CTEST(hashtable, add_and_lookup)
+CTEST(hashtable, add)
 {
     hashtable head = hashtable_initialize();
     ASSERT_TRUE(hashtable_add(head, "key1", 10));
@@ -118,9 +118,28 @@ CTEST(hashtable, add_and_lookup)
     ASSERT_STR("key2", node2->data);
     ASSERT_EQUAL(20, node2->value);
 
+    free(head);
+}
+
+CTEST(hashtable, lookup)
+{
+    hashtable head = hashtable_initialize();
+    hashtable_add(head, "key1", 10);
+    hashtable_add(head, "key2", 20);
+
+    hashtable_node node1 = hashtable_lookup(head, "key1");
+    ASSERT_NOT_NULL(node1);
+    ASSERT_STR("key1", node1->data);
+    ASSERT_EQUAL(10, node1->value);
+
+    hashtable_node node2 = hashtable_lookup(head, "key2");
+    ASSERT_NOT_NULL(node2);
+    ASSERT_STR("key2", node2->data);
+    ASSERT_EQUAL(20, node2->value);
+
     ASSERT_NULL(hashtable_lookup(head, "key3"));
 
-    hashtable_free(head);
+    free(head);
 }
 
 CTEST(hashtable, delete)
