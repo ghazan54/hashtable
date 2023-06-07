@@ -34,5 +34,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
 	$(CC) $(CFLAGS) -MM -MT $@ -MF $(OBJ_DIR)/$*.d $<
 
+test: $(TARGET)
+	build/hashtable_test.out
+
 clean:
 	rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d $(TARGET) $(LIB)
