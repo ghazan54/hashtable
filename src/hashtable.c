@@ -73,7 +73,7 @@ void list_print(struct listnode* list)
     printf("\n");
 }
 
-unsigned int ELFHash(char* key)
+static unsigned int ELFHash(const char* key)
 {
     unsigned int h = 0, g;
     while (*key) {
@@ -84,6 +84,17 @@ unsigned int ELFHash(char* key)
         h &= ~g;
     }
     return h % HASHTABLE_HEIGHT;
+}
+
+static unsigned int (*pHashfunc)(const char*) = ELFHash;
+
+bool hashtable_sethashfunc(unsigned int (*func)(const char*))
+{
+    if (func != NULL) {
+        pHashfunc = func;
+        return true;
+    }
+    return false;
 }
 
 hashtable hashtable_initialize(void)
@@ -99,7 +110,7 @@ hashtable hashtable_initialize(void)
 bool hashtable_add(hashtable head, char* key, int value)
 {
     if (head && key) {
-        unsigned int h = ELFHash(key);
+        unsigned int h = pHashfunc(key);
         head[h] = list_addfront(head[h], key, value);
         return true;
     }
@@ -109,7 +120,7 @@ bool hashtable_add(hashtable head, char* key, int value)
 hashtable_node hashtable_lookup(hashtable head, char* key)
 {
     if (head && key) {
-        unsigned int h = ELFHash(key);
+        unsigned int h = pHashfunc(key);
         hashtable_node ret = list_lookup(head[h], key);
         return ret;
     }
@@ -119,7 +130,7 @@ hashtable_node hashtable_lookup(hashtable head, char* key)
 void hashtable_delete(hashtable head, char* key)
 {
     if (head && key) {
-        unsigned int h = ELFHash(key);
+        unsigned int h = pHashfunc(key);
         head[h] = list_delete(head[h], key);
     }
 }
