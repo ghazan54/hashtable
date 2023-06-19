@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define HASHTABLE_HEIGHT (1000033)
+#define HASHTABLE_HEIGHT (2000003)
 
 #define list_free(l)           \
     {                          \
@@ -33,7 +33,6 @@ void hashtable_delete(hashtable head, char* key);
 void hashtable_print(hashtable head);
 void hashtable_free_not_null(hashtable head);
 bool hashtable_sethashfunc(unsigned int (*func)(const char* key));
-unsigned hashtable_col(hashtable head);
 
 struct listnode* list_createnode(char* data, int value);
 struct listnode* list_addfront(struct listnode* list, char* data, int value);

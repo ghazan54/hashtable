@@ -16,7 +16,7 @@ struct listnode* list_createnode(char* data, int value)
 
 struct listnode* list_addfront(struct listnode* list, char* data, int value)
 {
-    struct listnode* newnode;
+    struct listnode* newnode = NULL;
     newnode = list_createnode(data, value);
     if (newnode != NULL) {
         newnode->next = list;
@@ -71,6 +71,15 @@ void list_print(struct listnode* list)
         printf("[%s]%d ", list->data, list->value);
     }
     printf("\n");
+}
+
+unsigned list_len(struct listnode* list)
+{
+    unsigned len = 0;
+    for (; list; list = list->next) {
+        ++len;
+    }
+    return len;
 }
 
 static unsigned int ELFHash(const char* key)

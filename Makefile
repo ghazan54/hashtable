@@ -15,7 +15,7 @@ TEST_SRC := $(wildcard $(TEST_DIR)/*.c)
 TEST_EXE := $(TEST_DIR)/test.c
 DEPS := $(OBJ:.o=.d)
 
-.PHONY: all clean
+.PHONY: all clean create_build
 
 all: create_build $(TARGET)
 
